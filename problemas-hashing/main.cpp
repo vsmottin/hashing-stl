@@ -112,15 +112,6 @@ int maiorSequenciaConsecutivos(std::vector<int>& arr){
     return max_count;
 }
 
-#include <vector>
-#include <unordered_set>
-
-/**
- * Verifica se existe um subvetor (contíguo) cuja soma é 0.
- *
- * @param arr O vetor de entrada.
- * @return true se tal subvetor existe, false caso contrário.
- */
 bool temSubvetorSomaZero(std::vector<int>& arr) {
     std::unordered_set<long long> somasPrefixo;
 
@@ -137,6 +128,138 @@ bool temSubvetorSomaZero(std::vector<int>& arr) {
 
     return false;
 }
+
+bool temSubvetorSomaK(std::vector<int>& arr, int k){
+    std::unordered_set<int> somasPrefixo;
+
+    int somaAtual = 0;
+    somasPrefixo.insert(0);
+
+    for(int i : arr){
+        somaAtual += i;
+        if (somasPrefixo.count(somaAtual - k) > 0) {
+            return true;
+        }
+        somasPrefixo.insert(somaAtual);
+    }
+    return false;
+}
+
+bool saoIguais(std::vector<int>& arr1, std::vector<int>& arr2){
+    std::unordered_set<int> us1;
+
+    for(int i : arr1){
+        us1.insert(1);
+    }
+
+    for(int j : arr2){
+        if(us1.count(j) == 0) return false;
+    }
+
+    return true;
+}
+
+std::vector<int> uniao(const std::vector<int>& arr1, const std::vector<int>& arr2) {
+    std::unordered_set<int> s(arr1.begin(), arr1.end()); 
+    s.insert(arr2.begin(), arr2.end());                  
+
+    return std::vector<int>(s.begin(), s.end());   
+}
+
+vector<int> intersecao(const std::vector<int>& arr1, const std::vector<int>& arr2){
+    unordered_set<int> valores;
+    vector<int> interseccao;
+
+    for(int i : arr1){
+        valores.insert(i);
+    }
+
+    for(int i : arr2){
+        if(valores.count(i) > 0){
+            interseccao.push_back(i);
+        }
+    }
+
+    return interseccao;
+}
+
+vector<int> diferenca(const std::vector<int>& arr1, const std::vector<int>& arr2){
+    unordered_set<int> valores;
+    vector<int> diferenca;
+
+    for(int i : arr1){
+        valores.insert(i);
+    }
+
+    for(int i : arr2){
+        if(valores.count(i) == 0){
+            diferenca.push_back(i);
+        }
+    }
+
+    return diferenca;
+}
+
+bool ehSubconjunto(vector<int>& arr1, vector<int>& arr2){
+    unordered_set<int> valores_arr2;
+    for(int i : arr2){
+        valores_arr2.insert(i);
+    }
+
+    for(int i : arr1){
+        if(valores_arr2.count(i) == 0){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool saoDisjuntos(vector<int>& arr1, vector<int>& arr2){
+    unordered_set<int> valores_arr1;
+    for(int i : arr1){
+        valores_arr1.insert(i);
+    }
+
+    for(int i : arr2){
+        if(valores_arr1.count(i) == 1) return false;
+    }
+
+    return true;
+}
+
+vector<int> diferencaSimetrica(vector<int>& arr1, vector<int>& arr2){
+    unordered_set<int> valores_arr1;
+    vector<int> diferenca;
+
+    for(int i : arr1){
+        valores_arr1.insert(i);
+    }
+
+    for(int i : arr2){
+        if(valores_arr1.count(i) == 0) diferenca.push_back(i);
+    }
+
+    return diferenca;
+}
+
+int elementoMajoritario(vector<int>& arr){
+    unordered_map<int, int> mapa;
+    for(int i : arr){
+        mapa[i]++;
+    }
+
+    for (auto it = mapa.begin(); it != mapa.end(); ++it) {
+        if (it-> second > (arr.size() / 2)) return it-> first;
+    }
+
+    return -1;
+}
+
+vector<int> contarElementosJanela(vector<int>& arr, int k){
+    unordered_map<vector<int>, int> mapa;
+}
+
 
 void imprimeMap(std::unordered_map<int,int> map){
     auto init = map.begin();
